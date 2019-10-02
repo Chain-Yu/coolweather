@@ -48,7 +48,7 @@ public class AutoUpdateService extends Service {
 
     //更新天气信息
     private void updateWeather() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this):
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);
         if(weatherString!=null){
             // 有缓存时直接解析天气数据
@@ -62,7 +62,7 @@ public class AutoUpdateService extends Service {
                     String responseText = response.body().string();
                     Weather weather1 = Utility.handleWeatherResponse(responseText);
                     if(weather1!=null && "ok".equals(weather1.status)){
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                         editor.putString("weather",responseText);
                         editor.apply();
                     }
@@ -83,7 +83,7 @@ public class AutoUpdateService extends Service {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 final String bingPic = response.body().string();
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this).edit();
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
                 editor.putString("bing_pic",bingPic);
                 editor.apply();;
             }
